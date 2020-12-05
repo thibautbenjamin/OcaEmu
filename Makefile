@@ -8,7 +8,7 @@
 # RESULT = emu
 # ANNOTATE = true
 
-PACKS = unix stdint graphics tsdl
+PACKS = unix stdint tsdl
 SOURCES =  common.ml registers.ml command.ml cpuState.ml cpu.ml invaders.ml emu.ml
 RESULT = emu
 ANNOTATE = true
