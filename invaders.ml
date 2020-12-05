@@ -179,29 +179,31 @@ let emulate machine =
     machine.cycles_since_last_interrupt <- machine.cycles_since_last_interrupt + n_cycles;
     begin
       if (machine.cycles_since_last_interrupt >= int_of_float (cpu_frequency /. interrupts_frequency))
-      then begin
-        let address =
-          match machine.vblank with
-          |false -> 0x08
-          |true -> 0x10
-        in
-        machine.vblank <- not machine.vblank;
-        fire_interrupt machine.cpu address;
+      then
         begin
-          match machine.vblank with
-          |false -> print_graphics machine
-          |true -> ()
+          let address =
+            match machine.vblank with
+            |false -> 0x08
+            |true -> 0x10
+          in
+          machine.vblank <- not machine.vblank;
+          fire_interrupt machine.cpu address;
+          begin
+            match machine.vblank with
+            |false -> print_graphics machine
+            |true -> ()
+          end;
+          machine.cycles_since_last_interrupt <- 0;
+          while Sdl.poll_event(Some machine.event) do
+            match Sdl.Event.(get machine.event typ |> Sdl.Event.enum) with
+            |`Key_down -> InvadersInterface.pressed (keymap (Sdl.Event.(get machine.event keyboard_scancode)))
+            |`Key_up -> InvadersInterface.released (keymap (Sdl.Event.(get machine.event keyboard_scancode)))
+            |`Quit -> Sdl.quit(); exit 0
+            |_ -> ()
+          done;
         end;
-        machine.cycles_since_last_interrupt <- 0;
-      end
     end;
-    while Sdl.poll_event(Some machine.event) do
-      match Sdl.Event.(get machine.event typ |> Sdl.Event.enum) with
-      |`Key_down -> InvadersInterface.pressed (keymap (Sdl.Event.(get machine.event keyboard_scancode)))
-      |`Key_up -> InvadersInterface.released (keymap (Sdl.Event.(get machine.event keyboard_scancode)))
-      |`Quit -> Sdl.quit(); exit 0
-      |_ -> ()
-    done;
+    Unix.sleepf (machine.last_cmd_time +. (float n_cycles) /. cpu_frequency -. Sys.time());
     emulate_loop cpu
   in
   emulate_loop machine.cpu
