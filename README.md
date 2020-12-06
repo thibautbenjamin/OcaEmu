@@ -19,3 +19,10 @@ This repository does not contain the Space Invaders ROM, which you have to eithe
 
 and then place the resulting file called `invaders` in the project directory. You can now start the emulator by running `./emu invaders` from within the directory.
     
+## Controls
+The in-app controls are the following
+ - `c`: add credits
+ - `enter` : start (1 player)
+ - `left` : move left
+ - `right` : move right
+ - `space` : fire
