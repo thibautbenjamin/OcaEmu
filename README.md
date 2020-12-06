@@ -5,7 +5,7 @@ An OCaml-based emulator for the Space Invaders arcade machine that I have coded 
 You need to install OCaml and the opam package manager which is used for installing all the OCaml libraries. I have developed this project with OCaml 4.11.1, but I hope it to be retrocompatible with older 4.0x versions, until 4.03. The graphics and events part are done in SDL using Tsdl, so you also need to install the SDL library on your system. 
 
 Install the OCaml libraries needed to compile this software by running
-`opam install unix stdint tsdl`
+`opam install stdint tsdl`
 
 Then clone this repository and compile the software by simply running `make`, this will produce an executable called emu
 
