@@ -1,0 +1,3 @@
+(library
+   (name interfaces)
+   (libraries cpu8080))

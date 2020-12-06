@@ -1,0 +1,3 @@
+(library
+  (name cpu8080)
+  (libraries unix stdint common inOut))

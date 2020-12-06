@@ -1,0 +1,3 @@
+(library
+      (name inOut)
+      (libraries stdint tsdl))

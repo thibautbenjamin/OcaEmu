@@ -1,0 +1,3 @@
+(executable
+  (name emu)
+  (libraries unix machine interfaces))
